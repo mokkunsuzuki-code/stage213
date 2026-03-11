@@ -1,195 +1,146 @@
-QSP – Stage210
-Claim → Test → Evidence Mapping
+# QSP Stage211 — Claim-Bound CI Evidence
 
-QSP (Quantum Security Protocol) is an experimental protocol architecture exploring how Quantum Key Distribution (QKD) and Post-Quantum Cryptography (PQC) can be integrated into a verifiable and auditable session protocol.
+MIT License © 2025 Motohiro Suzuki
 
-Stage210 introduces traceable security claims, linking security reasoning to executable verification.
+Stage211 introduces **Claim-Bound CI Evidence**, a structure that explicitly links:
 
-Assumption
-↓
-Claim
-↓
-Test
-↓
-Evidence
+Claim  
+↓  
+CI Job  
+↓  
+Evidence Artifact
 
-This structure enables reviewers to clearly evaluate:
+This creates a **traceable and reproducible verification chain** between security claims and the artifacts produced by continuous integration.
 
-What evidence supports each security claim?
+The goal is to make security claims **inspectable, reproducible, and evidence-backed**.
 
-How to Review in 5 Minutes
+---
 
-Researchers reviewing this repository can follow this quick path:
+# Core Concept
 
-1️⃣ Protocol structure
-protocol_v1.0.md
+Traditional CI verifies whether tests pass.
 
-Minimal protocol design and session structure.
+Stage211 goes further:
 
-2️⃣ Security model
-docs/security_model.md
+Security **claims themselves** are bound to CI jobs and their generated evidence.
 
-Threat assumptions and security boundaries.
 
-3️⃣ Security claims
-docs/claim_matrix.md
+Claim → CI Job → Evidence Artifact
 
-Structured list of protocol guarantees.
 
-4️⃣ Claim → Evidence mapping
-docs/claim_evidence_mapping.md
+This structure ensures that:
 
-Each claim is linked to executable tests and evidence logs.
+- Each claim is backed by executable validation
+- CI outputs are preserved as verifiable artifacts
+- Reviewers can directly inspect evidence
 
-5️⃣ Executable tests
-tests/
+---
 
-Security behaviour is validated through automated tests.
+# Claim-Bound Evidence Mapping
 
-6️⃣ Evidence logs
+| Claim | CI Job | Evidence Artifact |
+|------|------|------|
+| A2 Replay Protection | attack_replay | evidence/replay_attack.log |
+| A3 Downgrade Protection | attack_downgrade | evidence/downgrade_attack.log |
+| A4 Session Integrity | session_integrity | evidence/session_integrity.log |
+| A5 Fail-Closed Behavior | fail_closed | evidence/fail_closed.log |
+
+Each CI job produces artifacts stored in the **evidence/** directory.
+
+These artifacts serve as **direct verification outputs** for the corresponding claim.
+
+---
+
+# Evidence Artifacts
+
+Example evidence files:
+
+
 evidence/
+replay_attack.log
+downgrade_attack.log
+session_integrity.log
+fail_closed.log
 
-Evidence produced by running the tests.
 
-Project Context
+These logs provide the **observable outputs of adversarial tests** executed by CI.
 
-This repository is part of the QSP staged development process, where each stage introduces a specific architectural step.
+---
 
-Stage	Focus
-Stage206	Minimal protocol demonstration
-Stage207	Cryptographic integration
-Stage208	Security model
-Stage209	Claim matrix
-Stage210	Claim → Test → Evidence mapping
+# Repository Structure
 
-Stage210 transforms the claim structure into traceable security engineering.
 
-Traceable Security Claims
-
-Traditional protocol descriptions often include security claims without executable verification.
-
-Stage210 introduces explicit mapping:
-
-Claim
-↓
-Executable Test
-↓
-Evidence
-
-This approach improves:
-
-auditability
-
-reproducibility
-
-external reviewability
-
-Claim → Evidence Mapping
-
-Detailed mapping:
-
-docs/claim_evidence_mapping.md
-
-Example structure:
-
-Claim	Test	Evidence
-Replay attack resistance	tests/test_replay.py	evidence/replay_attack.log
-Downgrade protection	tests/test_downgrade.py	evidence/downgrade_attack.log
-Fail-closed behaviour	tests/test_fail_closed.py	evidence/fail_closed.log
-Session integrity	tests/test_session_integrity.py	evidence/session_integrity.log
-Repository Structure
-stage210
-│
+stage211/
+├── claims/
+├── crypto/
 ├── docs/
-│   ├── claim_matrix.md
-│   ├── claim_evidence_mapping.md
-│   └── security_model.md
-│
 ├── evidence/
-│   ├── replay_attack.log
-│   ├── downgrade_attack.log
-│   ├── fail_closed.log
-│   └── session_integrity.log
-│
+│ ├── replay_attack.log
+│ ├── downgrade_attack.log
+│ ├── session_integrity.log
+│ └── fail_closed.log
+├── protocol/
 ├── tests/
-│
-├── qspcrypto/
-│
-├── qsp_demo/
-│
-├── scripts/
-│
-├── protocol_v1.0.md
-│
+├── tools/
 └── README.md
-Design Philosophy
 
-QSP follows a fail-closed security model.
 
-If any security assumption fails, the protocol must terminate safely.
+---
 
-Examples include:
+# Design Goal
 
-entropy source failure
+Stage211 aims to strengthen protocol validation by making security claims:
 
-cryptographic downgrade attempts
+- explicit
+- testable
+- evidence-linked
+- reproducible
 
-replay attempts
+Instead of relying on narrative claims, the system exposes a **claim → validation → artifact pipeline**.
 
-protocol state inconsistencies
+---
 
-QKD Position in QSP
+# Relation to Stage210
 
-QKD is treated as:
+Stage210 introduced a conceptual structure:
 
-Optional entropy source
-not
-automatic security upgrade
 
-Security guarantees are defined independently of QKD availability.
+Claim → Test → Evidence
 
-This design avoids implicit security assumptions.
 
-Security Engineering Goal
+Stage211 refines this by binding claims **directly to CI jobs and artifacts**:
 
-The goal of QSP is not to introduce a new QKD security proof.
 
-Instead, the focus is:
+Claim → CI Job → Evidence Artifact
 
-explicit security assumptions
 
-traceable protocol claims
+This ensures that every security claim has:
 
-executable validation
+- a corresponding automated test
+- a CI execution record
+- a verifiable artifact
 
-reproducible security reasoning
+---
 
-Status
+# Security Philosophy
 
-This repository is an experimental research prototype.
+The QSP project emphasizes:
 
-It explores protocol architecture and verifiable security reasoning.
+- explicit security assumptions
+- adversarial testing
+- fail-closed protocol behavior
+- reproducible verification
 
-Future Work
+Claim-Bound CI Evidence is designed to reduce ambiguity between:
 
-Potential future improvements include:
+- protocol design
+- implementation
+- validation results
 
-CI-bound claim verification
+---
 
-automatic evidence generation
-
-formal verification integration
-
-reproducible security reports
-
-external interoperability experiments
-
-License
+# License
 
 MIT License
 
 Copyright (c) 2025 Motohiro Suzuki
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files to deal in the Software
-without restriction.
