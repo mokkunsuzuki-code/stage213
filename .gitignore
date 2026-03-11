@@ -3,5 +3,3 @@ __pycache__/
 .venv/
 
 keys/evidence_signing_private.pem
-
-keys/evidence_signing_private.pem
