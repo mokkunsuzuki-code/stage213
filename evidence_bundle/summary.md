@@ -1,26 +1,21 @@
 # QSP Evidence Bundle
 
-This directory contains verification artifacts generated from CI runs.
+Generated: 2026-03-11T07:40:33.018899
 
-Structure:
+## Structure
 
-Claim
-↓
-CI Job
-↓
-Evidence Artifact
-↓
-CI Run ID
+- Claim
+- CI Job
+- Evidence Artifact
+- CI Run ID
+- Evidence Bundle
 
-Files included:
+## Files
 
-- replay_attack.log
-- downgrade_attack.log
-- session_integrity.log
-- fail_closed.log
-- actions_runs.json
 - actions_jobs.json
-
-Purpose:
-
-Provide a reproducible evidence package linking security claims to CI 
+- actions_runs.json
+- downgrade_attack.log
+- fail_closed.log
+- replay_attack.log
+- session_integrity.log
+- summary.md
