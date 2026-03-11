@@ -1,7 +1,7 @@
 __pycache__/
 *.pyc
 .venv/
-.env
-.pytest_cache/
-dist/
-build/
+
+keys/evidence_signing_private.pem
+
+keys/evidence_signing_private.pem
